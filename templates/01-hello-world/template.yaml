@@ -3,10 +3,10 @@ kind: Template
 metadata:
   name: hello-world
   title: Hello World
+  description: An example template for the scaffolder that creates a simple Node.js service
 spec:
-  owner: muvaf/kubecon-na-2022
+  owner: user:guest
   type: service
-
   parameters:
     - title: Provide metadata
       required:
@@ -37,7 +37,6 @@ spec:
           ui:options:
             allowedHosts:
               - github.com
-
   steps:
     - id: fetch-base
       name: Fetch Base
@@ -49,7 +48,6 @@ spec:
           owner: ${{ parameters.owner }}
           githubRepositoryOrg: ${{ (parameters.repoUrl | parseRepoUrl).owner }}
           githubRepositoryName: ${{ (parameters.repoUrl | parseRepoUrl).repo }}
-
     - id: publish
       name: Publish
       action: publish:github
@@ -61,7 +59,6 @@ spec:
         defaultBranch: main
         protectDefaultBranch: false
         requireCodeOwnerReviews: false
-
     - id: register
       name: Register
       action: catalog:register

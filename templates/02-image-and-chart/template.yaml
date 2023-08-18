@@ -1,12 +1,12 @@
 apiVersion: scaffolder.backstage.io/v1beta3
 kind: Template
 metadata:
-  name: hello-world-on-kubernetes
-  title: Hello World on Kubernetes
+  name: hello-world-with-helm
+  title: Hello World with Helm
+  description: The node.js service with CI, Dockerfile and Helm chart
 spec:
-  owner: muvaf/cloud-native-heroku
+  owner: user:guest
   type: service
-
   parameters:
     - title: Provide metadata
       required:
@@ -37,7 +37,6 @@ spec:
           ui:options:
             allowedHosts:
               - github.com
-
   steps:
     - id: fetch-base
       name: Fetch Base
@@ -49,7 +48,6 @@ spec:
           owner: ${{ parameters.owner }}
           githubRepositoryOrg: ${{ (parameters.repoUrl | parseRepoUrl).owner }}
           githubRepositoryName: ${{ (parameters.repoUrl | parseRepoUrl).repo }}
-
     - id: publish
       name: Publish
       action: publish:github
@@ -61,7 +59,6 @@ spec:
         defaultBranch: main
         protectDefaultBranch: false
         requireCodeOwnerReviews: false
-
     - id: register
       name: Register
       action: catalog:register
