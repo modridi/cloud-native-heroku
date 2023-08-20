@@ -1,3 +1,2 @@
 image:
-  # To be replaced in-place before publishing or installation.
-  tag: "%%TAG%%"
+  tag: latest
