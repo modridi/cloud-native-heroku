@@ -1,33 +1,25 @@
-const {Storage} = require('@google-cloud/storage');
-var fs = require('fs');
-var os = require('os');
-var uuid = require('uuid');
+const http = require('http');
 
-
-const bucketName = process.env.BUCKET_NAME;
-// Assumes GOOGLE_APPLICATION_CREDENTIALS env var is available.
-const storage = new Storage();
-
-async function run() {
-  const start = Date.now();
-  const timeout = 30 * 60 * 1000; // 30 minutes
-  while (start + timeout > Date.now()) {
-    // Write to disk.
-    const filePath = `${os.tmpdir()}/${uuid.v4()}`
-    fs.writeFile(filePath, "mydata", function (err) {
-      console.log(`${filePath} is written.`);
-    })
-    // Upload.
-    await storage.bucket(bucketName).upload(filePath);
-    console.log(`${filePath} uploaded to ${bucketName}`);
-    // List.
-    const [files] = await storage.bucket(bucketName).getFiles();
-    console.log('Files:');
-    files.forEach(file => {
-      console.log(file.name);
-    });
-    console.log("Waiting for 30 seconds...")
-    await new Promise(resolve => setTimeout(resolve, 30 * 1000));
-  }
+const port = process.env.PORT || 8080
+const requestListener = function (req, res) {
+  res.writeHead(200);
+  res.end('Hello World! My name is ${{ values.serviceName }} and my owner is ${{ values.owner }}');
 }
-run().catch(console.error);
+const server = http.createServer(requestListener);
+
+var Minio = require('minio')
+var minioClient = new Minio.Client({
+  endPoint: process.env.ENDPOINT,
+  port: 9000,
+  useSSL: false,
+  accessKey: process.env.ACCESS_KEY,
+  secretKey: process.env.SECRET_KEY
+});
+var file = 'package.json'
+
+minioClient.fPutObject(process.env.BUCKET_NAME, 'hello-object', file, function (err, etag) {
+  if (err) return console.log(err)
+  console.log('File uploaded successfully.')
+});
+
+server.listen(port);

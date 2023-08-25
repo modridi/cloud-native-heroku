@@ -6,3 +6,13 @@ spec:
   type: service
   lifecycle: experimental
   owner: ${{values.owner | dump}}
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: ${{values.serviceName | dump}}
+spec:
+  type: s3-bucket
+  owner: ${{values.owner | dump}}
+  dependencyOf:
+  - component:default/${{values.serviceName | dump}}

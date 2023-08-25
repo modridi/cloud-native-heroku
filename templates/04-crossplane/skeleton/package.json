@@ -1,14 +1,11 @@
 {
-  "name": "hello-world",
+  "name": "hello-world-crossplane",
   "version": "1.0.0",
-  "description": "Kubecon NA 2022 - Cloud Native Heroku",
-  "author": "First Last <first.last@example.com>",
   "main": "server.js",
-  "scripts": {
-    "start": "node server.js"
-  },
+  "author": "Mohamed",
   "license": "MIT",
   "dependencies": {
-    "@google-cloud/storage": "^6.7.0"
+    "http": "^0.0.1-security",
+    "minio": "^7.1.1"
   }
 }

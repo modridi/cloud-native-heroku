@@ -1,8 +1,19 @@
-apiVersion: kubecon.org/v1alpha1
+apiVersion: s3.aws.upbound.io/v1beta1
 kind: Bucket
 metadata:
-  name: photos
+  name: ${{ values.serviceName }}
 spec:
-  location: us
-  writeConnectionSecretToRef:
-    name: bucket-creds
+  forProvider:
+    region: us-east-1
+  providerConfigRef:
+    name: default
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: bucket-creds
+stringData:
+  endpoint: minio.minio
+  bucketName: ${{ values.serviceName }}
+  accessKey: read-write-user
+  secretKey: 'backstage@c2c'
