@@ -1,3 +1,11 @@
+prometheus-blackbox-exporter:
+  serviceMonitor:
+    enabled: true
+    targets:
+      - name: ${{ values.serviceName }}-health
+        url: http://${{ values.serviceName }}
+        interval: 30s
+        module: http_2xx
+
 image:
-  # To be replaced in-place before publishing or installation.
   tag: latest
