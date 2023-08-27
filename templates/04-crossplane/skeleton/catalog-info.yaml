@@ -4,6 +4,7 @@ metadata:
   name: ${{values.serviceName | dump}}
   annotations:
     argocd/app-name: ${{values.serviceName | dump}}
+    grafana/dashboard-selector: ${{values.serviceName | dump}}
 spec:
   type: service
   lifecycle: experimental
