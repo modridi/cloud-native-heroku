@@ -1,22 +1,22 @@
 apiVersion: backstage.io/v1alpha1
 kind: Component
 metadata:
-  name: ${{values.serviceName | dump}}
+  name: ${{values.serviceName}}
   annotations:
-    argocd/app-name: ${{values.serviceName | dump}}
-    grafana/dashboard-selector: ${{values.serviceName | dump}}
+    argocd/app-name: ${{values.serviceName}}
+    grafana/dashboard-selector: ${{values.serviceName}}
     prometheus.io/alert: '${{ values.serviceName }}-ServiceDown'
 spec:
   type: service
   lifecycle: experimental
-  owner: ${{values.owner | dump}}
+  owner: ${{values.owner}}
 ---
 apiVersion: backstage.io/v1alpha1
 kind: Resource
 metadata:
-  name: ${{values.serviceName | dump}}
+  name: ${{values.serviceName}}
 spec:
   type: s3-bucket
-  owner: ${{values.owner | dump}}
+  owner: ${{values.owner}}
   dependencyOf:
-  - component:default/${{values.serviceName | dump}}
+  - component:default/${{values.serviceName}}
