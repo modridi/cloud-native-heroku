@@ -1,0 +1,10 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: ${{ values.serviceName }}-alerts
+spec:
+  groups:
+  - name: ${{ values.serviceName }}-alerts
+    rules:
+    - alert: ${{ values.serviceName }}-ServiceDown
+      expr: probe_success{target="${{ values.serviceName }}-health"} != 1
