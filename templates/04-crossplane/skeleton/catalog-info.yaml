@@ -6,6 +6,7 @@ metadata:
     argocd/app-name: ${{values.serviceName}}
     grafana/dashboard-selector: ${{values.serviceName}}
     prometheus.io/alert: '${{ values.serviceName }}-ServiceDown'
+    github.com/project-slug: '${{ values.githubRepositoryOrg }}/${{ values.githubRepositoryName }}'
 spec:
   type: service
   lifecycle: experimental
