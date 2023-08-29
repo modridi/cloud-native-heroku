@@ -51,3 +51,21 @@ spec:
                 secretKeyRef:
                   name: bucket-creds
                   key: secretKey
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ${{ values.serviceName }}-ingress
+spec:
+  ingressClassName: traefik
+  rules:
+  - host: {{ .Values.host }}
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: ${{ values.serviceName }}
+            port:
+              number: 80

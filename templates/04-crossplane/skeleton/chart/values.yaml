@@ -10,3 +10,4 @@ prometheus-blackbox-exporter:
 image:
   name: ghcr.io/${{ values.githubRepositoryOrg }}/${{ values.githubRepositoryName }}
   tag: latest
+  host: place_holder

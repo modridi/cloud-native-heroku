@@ -7,6 +7,9 @@ metadata:
     grafana/dashboard-selector: ${{values.serviceName}}
     prometheus.io/alert: '${{ values.serviceName }}-ServiceDown'
     github.com/project-slug: '${{ values.githubRepositoryOrg }}/${{ values.githubRepositoryName }}'
+  links:
+    - url: http://${{values.serviceName}}.${{values.domain}}
+      title: Home page
 spec:
   type: service
   lifecycle: experimental

@@ -11,6 +11,7 @@ spec:
     - title: Provide metadata
       required:
         - serviceName
+        - domain
         - owner
       properties:
         serviceName:
@@ -18,6 +19,10 @@ spec:
           type: string
           description: Unique name of the component
           ui:field: EntityNamePicker
+        domain:
+          title: Domain
+          type: string
+          description: Service domain
         owner:
           title: Owner
           type: string
@@ -48,6 +53,7 @@ spec:
           owner: ${{ parameters.owner }}
           githubRepositoryOrg: ${{ (parameters.repoUrl | parseRepoUrl).owner }}
           githubRepositoryName: ${{ (parameters.repoUrl | parseRepoUrl).repo }}
+          domain: ${{ parameters.domain }}
     - id: publish
       name: Publish
       action: publish:github
@@ -86,6 +92,7 @@ spec:
                 values: |
                   name: ghcr.io/${{ (parameters.repoUrl | parseRepoUrl).owner }}/${{ (parameters.repoUrl | parseRepoUrl).repo }}
                   tag: latest
+                  host: ${{ parameters.serviceName }}.${{ parameters.domain }}
             syncPolicy:
               automated:
                 selfHeal: true
