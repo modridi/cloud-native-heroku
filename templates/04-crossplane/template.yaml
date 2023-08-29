@@ -70,6 +70,9 @@ spec:
           metadata:
             name: ${{ parameters.serviceName }}
             namespace: argocd
+            annotations:
+              argocd-image-updater.argoproj.io/image-list: ${{ parameters.serviceName }}=ghcr.io/${{ (parameters.repoUrl | parseRepoUrl).owner }}/${{ (parameters.repoUrl | parseRepoUrl).repo }}:latest
+              argocd-image-updater.argoproj.io/${{ parameters.serviceName }}.update-strategy: digest
           spec:
             destination:
               namespace: ${{ parameters.serviceName }}
@@ -79,6 +82,10 @@ spec:
               path: chart
               repoURL: https://github.com/${{ (parameters.repoUrl | parseRepoUrl).owner }}/${{ (parameters.repoUrl | parseRepoUrl).repo }}.git
               targetRevision: HEAD
+              helm:
+                values: |
+                  name: ghcr.io/${{ (parameters.repoUrl | parseRepoUrl).owner }}/${{ (parameters.repoUrl | parseRepoUrl).repo }}
+                  tag: latest
             syncPolicy:
               automated:
                 selfHeal: true

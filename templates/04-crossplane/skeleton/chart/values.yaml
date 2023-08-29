@@ -8,4 +8,5 @@ prometheus-blackbox-exporter:
         module: http_2xx
 
 image:
+  name: ghcr.io/${{ values.githubRepositoryOrg }}/${{ values.githubRepositoryName }}
   tag: latest
